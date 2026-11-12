@@ -1,0 +1,73 @@
+generator client {
+    provider = "prisma-client"
+    output   = "../src/generated/prisma"
+}
+
+datasource db {
+    provider = "postgresql"
+}
+
+model User {
+    id           String @id @default(uuid())
+    phone        String @unique @db.VarChar(20)
+    name         String @db.VarChar(40)
+    passwordHash String
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    sessions    session[]
+    roomMembers RoomMember[]
+    messages    Message[]
+}
+
+model session {
+    id        String   @id @default(uuid())
+    userId    String
+    expiredAt DateTime
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    user User @relation(fields: [userId], references: [id])
+}
+
+model Room {
+    id          String   @id @db.VarChar(30)
+    kind        String   @default("public") @db.VarChar(10)
+    name        String   @db.VarChar(60)
+    description String   @db.VarChar(200)
+    createdAt   DateTime @default(now()) @db.Timestamptz(3)
+    updatedAt   DateTime @updatedAt
+
+    members  RoomMember[]
+    messages Message[]
+}
+
+model RoomMember {
+    roomId String
+    userId String
+
+    room Room @relation(fields: [roomId], references: [id])
+    user User @relation(fields: [userId], references: [id])
+
+    @@id([roomId, userId])
+}
+
+model Message {
+    id              String @default(uuid())
+    sequence        BigInt @unique @default(autoincrement())
+    clientMessageId String
+    text            String
+    roomId          String
+    userId          String
+
+    username  String   @db.VarChar(40)
+    color     String   @db.VarChar(7)
+    createdAt DateTime @default(now())
+
+    user User @relation(fields: [userId], references: [id])
+    room Room @relation(fields: [roomId], references: [id])
+
+    @@unique([userId, clientMessageId])
+}

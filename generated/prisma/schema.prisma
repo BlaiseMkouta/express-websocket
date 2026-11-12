@@ -1,0 +1,16 @@
+generator client {
+  provider   = "prisma-client-js"
+  output     = "../generated/prisma"
+  engineType = "client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Room {
+  id          String   @id @db.VarChar(30)
+  name        String   @db.VarChar(60)
+  description String   @db.VarChar(200)
+  createdAt   DateTime @default(now()) @db.Timestamptz(3)
+}
