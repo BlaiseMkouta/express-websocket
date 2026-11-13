@@ -6,9 +6,8 @@ export function hashPassword(password: string) {
 
 export function verifyPassword(password: string, hash: string) {
   try {
-    return bcrypt.hash(password, hash);
+    return bcrypt.compare(password, hash);
   } catch (error) {
     return false;
   }
 }
-

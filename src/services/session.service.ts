@@ -1,6 +1,6 @@
 import { Store } from "../db/store";
 import { readSessionToken } from "../utils/cookies.util";
-import { verifySessionToken } from "../utils/jwt.util";
+import { signSessionToken, verifySessionToken } from "../utils/jwt.util";
 
 type User = {
   id: string;
@@ -39,7 +39,7 @@ export function sessionService({
     const token = readSessionToken(cookieHeader);
 
     if (!token) {
-      throw new Error("Token is required");
+      return null
     }
 
     const verifiedToken = verifySessionToken(token, secret);
@@ -72,6 +72,24 @@ export function sessionService({
       await store.deleteSession(verified.sessionId);
 
       return verified.sessionId;
+    },
+
+    /** Creer la session et renvoie JWT a mettre dans les cookies */
+    async open(userId: string) {
+      const expiredAt = new Date(Date.now() + ttlMs);
+
+      // creation de la session
+      const session = await store.createSession(userId, expiredAt);
+
+      const sessionId = session.id;
+
+      const token = signSessionToken(
+        { userId, sessionId },
+        secret,
+        Math.floor(ttlMs / 1000),
+      );
+
+      return token;
     },
   };
 }

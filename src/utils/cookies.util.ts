@@ -1,7 +1,7 @@
 import type { CookieOptions } from "express";
 import { parseCookie } from "cookie";
 
-const SESSION_COOKIE = "APP_WEBSOCKET";
+export const SESSION_COOKIE = "APP_WEBSOCKET";
 
 // options du cookies de session
 export const sessionCOokieOptions = (

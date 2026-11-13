@@ -10,6 +10,9 @@ export function requiredAuth(sessions: SessionService): RequestHandler {
         message: "not authenticated",
       });
     }
+
+    res.locals.user = session.user;
+
     next();
   };
 }
