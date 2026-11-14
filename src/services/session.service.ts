@@ -1,25 +1,23 @@
-import { Store } from "../db/store";
+import { Store, StoredUser } from "../db/store";
 import { readSessionToken } from "../utils/cookies.util";
 import { signSessionToken, verifySessionToken } from "../utils/jwt.util";
 
-type User = {
-  id: string;
-  name: string;
-  phone: string;
-};
-
 export interface AuthenticatedSession {
-  user: User;
+  user: StoredUser;
   sessionId: string;
 }
 
 export interface SessionService {
   /** Duree de vie du token */
   ttlMs: number;
-
+  /** Cree la session en base et renvoie le JWT a mettre dans le cookie */
+  open(userId: string): Promise<string>;
+  /** Verifie le cookie : signature du JWT, puis existence de la session en base */
   authenticated(
     cookieHeader: string | undefined,
   ): Promise<AuthenticatedSession | null>;
+  /** Supprime la session du cookie ; renvoie son id (ou null) */
+  revoke(cookieHeader: string | undefined): Promise<string | null>;
 }
 
 export function sessionService({
@@ -30,43 +28,32 @@ export function sessionService({
   store: Store;
   secret: string;
   ttlMs: number;
-}) {
+}): SessionService {
   /**
-   *
-   * Lis et verifie le token JWT du cookie
+   * Lis et verifie le token JWT du cookie (sans acces a la base)
    */
   function claimsToken(cookieHeader: string | undefined) {
     const token = readSessionToken(cookieHeader);
-
-    if (!token) {
-      return null
-    }
-
-    const verifiedToken = verifySessionToken(token, secret);
-
-    if (!verifiedToken) return null;
-
-    return verifiedToken;
+    return token ? verifySessionToken(token, secret) : null;
   }
 
   return {
     ttlMs,
 
-    async authenticated(cookieHeader: string) {
+    async authenticated(cookieHeader) {
       const verified = claimsToken(cookieHeader);
-
       if (!verified) return null;
 
       const user = await store.findSession(verified.sessionId);
 
-      if (!user) return null;
+      // la session doit exister ET appartenir au compte indique dans le jeton
+      if (!user || user.id !== verified.userId) return null;
 
       return { sessionId: verified.sessionId, user };
     },
 
-    async revoke(cookieHeader: string) {
+    async revoke(cookieHeader) {
       const verified = claimsToken(cookieHeader);
-
       if (!verified) return null;
 
       await store.deleteSession(verified.sessionId);
@@ -74,24 +61,17 @@ export function sessionService({
       return verified.sessionId;
     },
 
-    /** Creer la session et renvoie JWT a mettre dans les cookies */
-    async open(userId: string) {
+    async open(userId) {
       const expiredAt = new Date(Date.now() + ttlMs);
 
       // creation de la session
       const session = await store.createSession(userId, expiredAt);
 
-      const sessionId = session.id;
-
-      const token = signSessionToken(
-        { userId, sessionId },
+      return signSessionToken(
+        { userId, sessionId: session.id },
         secret,
         Math.floor(ttlMs / 1000),
       );
-
-      return token;
     },
   };
 }
-
-// export const authenticated = (cookieHeader) => {};

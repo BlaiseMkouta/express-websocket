@@ -1,10 +1,5 @@
-import { setEngine } from "node:crypto";
 import prisma from "../config/prisma";
 import { session } from "../generated/prisma/client";
-
-// export interface StoredUser {
-//   phone: string[];
-// }
 
 export interface StoredUser {
   id: string;
@@ -14,29 +9,30 @@ export interface StoredUser {
 
 export interface Store {
   createSession(userId: string, expiredAt: Date): Promise<session>;
+  /** Compte d'une session encore valide (existante ET non expiree), sinon null */
   findSession(id: string): Promise<StoredUser | null>;
   deleteSession(id: string): Promise<void>;
 }
 
-export function PrismaStore() {
+export function PrismaStore(): Store {
   return {
-    async createSession(userId: string, expiredAt: Date) {
-      const session = await prisma.session.create({
+    async createSession(userId, expiredAt) {
+      return prisma.session.create({
         data: {
           userId,
           expiredAt,
         },
       });
-      return session;
     },
 
-    async findSession(id: string) {
-      const session = await prisma.session.findFirst({
+    async findSession(id) {
+      const session = await prisma.session.findUnique({
         where: { id },
         include: { user: true },
       });
 
-      if (!session) return null;
+      // session revoquee ou expiree => refusee
+      if (!session || session.expiredAt.getTime() <= Date.now()) return null;
 
       return {
         id: session.user.id,
@@ -45,8 +41,9 @@ export function PrismaStore() {
       };
     },
 
-    async deleteSession(id: string) {
-      await prisma.session.delete({
+    async deleteSession(id) {
+      // deleteMany ne leve pas d'erreur si la ligne n'existe deja plus
+      await prisma.session.deleteMany({
         where: { id },
       });
     },

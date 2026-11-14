@@ -42,7 +42,6 @@ export type MessageMinAggregateOutputType = {
   roomId: string | null
   userId: string | null
   username: string | null
-  color: string | null
   createdAt: Date | null
 }
 
@@ -54,7 +53,6 @@ export type MessageMaxAggregateOutputType = {
   roomId: string | null
   userId: string | null
   username: string | null
-  color: string | null
   createdAt: Date | null
 }
 
@@ -66,7 +64,6 @@ export type MessageCountAggregateOutputType = {
   roomId: number
   userId: number
   username: number
-  color: number
   createdAt: number
   _all: number
 }
@@ -88,7 +85,6 @@ export type MessageMinAggregateInputType = {
   roomId?: true
   userId?: true
   username?: true
-  color?: true
   createdAt?: true
 }
 
@@ -100,7 +96,6 @@ export type MessageMaxAggregateInputType = {
   roomId?: true
   userId?: true
   username?: true
-  color?: true
   createdAt?: true
 }
 
@@ -112,7 +107,6 @@ export type MessageCountAggregateInputType = {
   roomId?: true
   userId?: true
   username?: true
-  color?: true
   createdAt?: true
   _all?: true
 }
@@ -211,7 +205,6 @@ export type MessageGroupByOutputType = {
   roomId: string
   userId: string
   username: string
-  color: string
   createdAt: Date
   _count: MessageCountAggregateOutputType | null
   _avg: MessageAvgAggregateOutputType | null
@@ -246,7 +239,6 @@ export type MessageWhereInput = {
   roomId?: Prisma.StringFilter<"Message"> | string
   userId?: Prisma.StringFilter<"Message"> | string
   username?: Prisma.StringFilter<"Message"> | string
-  color?: Prisma.StringFilter<"Message"> | string
   createdAt?: Prisma.DateTimeFilter<"Message"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   room?: Prisma.XOR<Prisma.RoomScalarRelationFilter, Prisma.RoomWhereInput>
@@ -260,7 +252,6 @@ export type MessageOrderByWithRelationInput = {
   roomId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   username?: Prisma.SortOrder
-  color?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
   room?: Prisma.RoomOrderByWithRelationInput
@@ -278,7 +269,6 @@ export type MessageWhereUniqueInput = Prisma.AtLeast<{
   roomId?: Prisma.StringFilter<"Message"> | string
   userId?: Prisma.StringFilter<"Message"> | string
   username?: Prisma.StringFilter<"Message"> | string
-  color?: Prisma.StringFilter<"Message"> | string
   createdAt?: Prisma.DateTimeFilter<"Message"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   room?: Prisma.XOR<Prisma.RoomScalarRelationFilter, Prisma.RoomWhereInput>
@@ -292,7 +282,6 @@ export type MessageOrderByWithAggregationInput = {
   roomId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   username?: Prisma.SortOrder
-  color?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.MessageCountOrderByAggregateInput
   _avg?: Prisma.MessageAvgOrderByAggregateInput
@@ -312,7 +301,6 @@ export type MessageScalarWhereWithAggregatesInput = {
   roomId?: Prisma.StringWithAggregatesFilter<"Message"> | string
   userId?: Prisma.StringWithAggregatesFilter<"Message"> | string
   username?: Prisma.StringWithAggregatesFilter<"Message"> | string
-  color?: Prisma.StringWithAggregatesFilter<"Message"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Message"> | Date | string
 }
 
@@ -322,7 +310,6 @@ export type MessageCreateInput = {
   clientMessageId: string
   text: string
   username: string
-  color: string
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutMessagesInput
   room: Prisma.RoomCreateNestedOneWithoutMessagesInput
@@ -336,7 +323,6 @@ export type MessageUncheckedCreateInput = {
   roomId: string
   userId: string
   username: string
-  color: string
   createdAt?: Date | string
 }
 
@@ -346,7 +332,6 @@ export type MessageUpdateInput = {
   clientMessageId?: Prisma.StringFieldUpdateOperationsInput | string
   text?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
-  color?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutMessagesNestedInput
   room?: Prisma.RoomUpdateOneRequiredWithoutMessagesNestedInput
@@ -360,7 +345,6 @@ export type MessageUncheckedUpdateInput = {
   roomId?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
-  color?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -372,7 +356,6 @@ export type MessageCreateManyInput = {
   roomId: string
   userId: string
   username: string
-  color: string
   createdAt?: Date | string
 }
 
@@ -382,7 +365,6 @@ export type MessageUpdateManyMutationInput = {
   clientMessageId?: Prisma.StringFieldUpdateOperationsInput | string
   text?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
-  color?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -394,7 +376,6 @@ export type MessageUncheckedUpdateManyInput = {
   roomId?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
-  color?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -421,7 +402,6 @@ export type MessageCountOrderByAggregateInput = {
   roomId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   username?: Prisma.SortOrder
-  color?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -437,7 +417,6 @@ export type MessageMaxOrderByAggregateInput = {
   roomId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   username?: Prisma.SortOrder
-  color?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -449,7 +428,6 @@ export type MessageMinOrderByAggregateInput = {
   roomId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   username?: Prisma.SortOrder
-  color?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -555,7 +533,6 @@ export type MessageCreateWithoutUserInput = {
   clientMessageId: string
   text: string
   username: string
-  color: string
   createdAt?: Date | string
   room: Prisma.RoomCreateNestedOneWithoutMessagesInput
 }
@@ -567,7 +544,6 @@ export type MessageUncheckedCreateWithoutUserInput = {
   text: string
   roomId: string
   username: string
-  color: string
   createdAt?: Date | string
 }
 
@@ -608,7 +584,6 @@ export type MessageScalarWhereInput = {
   roomId?: Prisma.StringFilter<"Message"> | string
   userId?: Prisma.StringFilter<"Message"> | string
   username?: Prisma.StringFilter<"Message"> | string
-  color?: Prisma.StringFilter<"Message"> | string
   createdAt?: Prisma.DateTimeFilter<"Message"> | Date | string
 }
 
@@ -618,7 +593,6 @@ export type MessageCreateWithoutRoomInput = {
   clientMessageId: string
   text: string
   username: string
-  color: string
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutMessagesInput
 }
@@ -630,7 +604,6 @@ export type MessageUncheckedCreateWithoutRoomInput = {
   text: string
   userId: string
   username: string
-  color: string
   createdAt?: Date | string
 }
 
@@ -667,7 +640,6 @@ export type MessageCreateManyUserInput = {
   text: string
   roomId: string
   username: string
-  color: string
   createdAt?: Date | string
 }
 
@@ -677,7 +649,6 @@ export type MessageUpdateWithoutUserInput = {
   clientMessageId?: Prisma.StringFieldUpdateOperationsInput | string
   text?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
-  color?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   room?: Prisma.RoomUpdateOneRequiredWithoutMessagesNestedInput
 }
@@ -689,7 +660,6 @@ export type MessageUncheckedUpdateWithoutUserInput = {
   text?: Prisma.StringFieldUpdateOperationsInput | string
   roomId?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
-  color?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -700,7 +670,6 @@ export type MessageUncheckedUpdateManyWithoutUserInput = {
   text?: Prisma.StringFieldUpdateOperationsInput | string
   roomId?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
-  color?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -711,7 +680,6 @@ export type MessageCreateManyRoomInput = {
   text: string
   userId: string
   username: string
-  color: string
   createdAt?: Date | string
 }
 
@@ -721,7 +689,6 @@ export type MessageUpdateWithoutRoomInput = {
   clientMessageId?: Prisma.StringFieldUpdateOperationsInput | string
   text?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
-  color?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutMessagesNestedInput
 }
@@ -733,7 +700,6 @@ export type MessageUncheckedUpdateWithoutRoomInput = {
   text?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
-  color?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -744,7 +710,6 @@ export type MessageUncheckedUpdateManyWithoutRoomInput = {
   text?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
-  color?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -758,7 +723,6 @@ export type MessageSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   roomId?: boolean
   userId?: boolean
   username?: boolean
-  color?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   room?: boolean | Prisma.RoomDefaultArgs<ExtArgs>
@@ -772,7 +736,6 @@ export type MessageSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   roomId?: boolean
   userId?: boolean
   username?: boolean
-  color?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   room?: boolean | Prisma.RoomDefaultArgs<ExtArgs>
@@ -786,7 +749,6 @@ export type MessageSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   roomId?: boolean
   userId?: boolean
   username?: boolean
-  color?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   room?: boolean | Prisma.RoomDefaultArgs<ExtArgs>
@@ -800,11 +762,10 @@ export type MessageSelectScalar = {
   roomId?: boolean
   userId?: boolean
   username?: boolean
-  color?: boolean
   createdAt?: boolean
 }
 
-export type MessageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sequence" | "clientMessageId" | "text" | "roomId" | "userId" | "username" | "color" | "createdAt", ExtArgs["result"]["message"]>
+export type MessageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sequence" | "clientMessageId" | "text" | "roomId" | "userId" | "username" | "createdAt", ExtArgs["result"]["message"]>
 export type MessageInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   room?: boolean | Prisma.RoomDefaultArgs<ExtArgs>
@@ -832,7 +793,6 @@ export type $MessagePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     roomId: string
     userId: string
     username: string
-    color: string
     createdAt: Date
   }, ExtArgs["result"]["message"]>
   composites: {}
@@ -1266,7 +1226,6 @@ export interface MessageFieldRefs {
   readonly roomId: Prisma.FieldRef<"Message", 'String'>
   readonly userId: Prisma.FieldRef<"Message", 'String'>
   readonly username: Prisma.FieldRef<"Message", 'String'>
-  readonly color: Prisma.FieldRef<"Message", 'String'>
   readonly createdAt: Prisma.FieldRef<"Message", 'DateTime'>
 }
     

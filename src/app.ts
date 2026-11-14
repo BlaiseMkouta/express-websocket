@@ -9,8 +9,8 @@ app.use(express.json());
 
 app.use(
   cors({
-    //origin
-    origin: process.env.CORS_ORIGINS,
+    // origines autorisees, separees par des virgules (avec credentials, "*" est interdit)
+    origin: (process.env.CORS_ORIGINS ?? "http://localhost:5173").split(","),
     credentials: true,
   }),
 );

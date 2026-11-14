@@ -3,13 +3,14 @@ import { parseCookie } from "cookie";
 
 export const SESSION_COOKIE = "APP_WEBSOCKET";
 
-// options du cookies de session
-export const sessionCOokieOptions = (
+// options du cookie de session
+// sameSite "lax" : "none" exige secure=true, sinon le navigateur rejette le cookie.
+export const sessionCookieOptions = (
   secure: boolean,
   maxAgeMs?: number,
 ): CookieOptions => ({
   httpOnly: true,
-  sameSite: "none", // "lax" en production
+  sameSite: "lax",
   secure,
   path: "/",
   ...(maxAgeMs ? { maxAge: maxAgeMs } : {}),
@@ -20,6 +21,5 @@ export function readSessionToken(cookieHeader: string | undefined) {
     return null;
   }
 
-  const token = parseCookie(cookieHeader)[SESSION_COOKIE];
-  return token;
+  return parseCookie(cookieHeader)[SESSION_COOKIE] ?? null;
 }

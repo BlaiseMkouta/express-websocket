@@ -881,7 +881,6 @@ export const MessageScalarFieldEnum = {
   roomId: 'roomId',
   userId: 'userId',
   username: 'username',
-  color: 'color',
   createdAt: 'createdAt'
 } as const
 

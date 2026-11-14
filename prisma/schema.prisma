@@ -63,7 +63,6 @@ model Message {
     userId          String
 
     username  String   @db.VarChar(40)
-    color     String   @db.VarChar(7)
     createdAt DateTime @default(now())
 
     user User @relation(fields: [userId], references: [id])
